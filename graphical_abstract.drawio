@@ -13,43 +13,43 @@
         <mxCell id="wuyQoKNk4EnmWG0LEpvZ-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="wuyQoKNk4EnmWG0LEpvZ-5" target="wuyQoKNk4EnmWG0LEpvZ-2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-5" value="Room" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-5" value="Room" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
           <mxGeometry x="-130" y="240" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="wuyQoKNk4EnmWG0LEpvZ-7" value="Mobile camera" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="36" y="290" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-8" value="Room lighted with light color" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-8" value="Room lighted with light color" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
           <mxGeometry x="800" y="240" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="wuyQoKNk4EnmWG0LEpvZ-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="wuyQoKNk4EnmWG0LEpvZ-9" target="wuyQoKNk4EnmWG0LEpvZ-10">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-9" value="Select corresponding statistical color data" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-9" value="Select corresponding statistical color data" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="350" y="140" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="wuyQoKNk4EnmWG0LEpvZ-21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="wuyQoKNk4EnmWG0LEpvZ-10" target="wuyQoKNk4EnmWG0LEpvZ-13">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-10" value="Perform statistical color transfer" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-10" value="Perform statistical color transfer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="350" y="240" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="wuyQoKNk4EnmWG0LEpvZ-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="wuyQoKNk4EnmWG0LEpvZ-12" target="wuyQoKNk4EnmWG0LEpvZ-10">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-12" value="Input video feed" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-12" value="Input video feed" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="160" y="240" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="wuyQoKNk4EnmWG0LEpvZ-27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="wuyQoKNk4EnmWG0LEpvZ-13" target="wuyQoKNk4EnmWG0LEpvZ-25">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-13" value="Output feed" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-13" value="Output feed" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
           <mxGeometry x="520" y="240" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="wuyQoKNk4EnmWG0LEpvZ-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="wuyQoKNk4EnmWG0LEpvZ-16" target="wuyQoKNk4EnmWG0LEpvZ-9">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-16" value="User selects light color" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="wuyQoKNk4EnmWG0LEpvZ-16" value="User selects light color" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
           <mxGeometry x="350" y="60" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="wuyQoKNk4EnmWG0LEpvZ-28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="wuyQoKNk4EnmWG0LEpvZ-25" target="wuyQoKNk4EnmWG0LEpvZ-8">
@@ -59,7 +59,7 @@
           <mxGeometry x="690" y="230" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="wuyQoKNk4EnmWG0LEpvZ-26" value="Mobile screen" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="700" y="340" width="60" height="30" as="geometry" />
+          <mxGeometry x="700" y="320" width="60" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
