@@ -2,75 +2,116 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Realistic Room Light Tint</title>
-  <button id = "Start">Start</button>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: sans-serif;
-      text-align: center;
-      background: #111;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: black;
+    }
+    canvas, video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+    #startButton {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+      border: none;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      font-size: 30px;
       color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      outline: none;
     }
-    canvas {
-      border-radius: 10px;
-      margin-top: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    #lightColorPicker {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      z-index: 10;
     }
-    .controls {
-      margin-top: 15px;
+    .colorOption {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
-    #video {
-      display: none;
+    .colorOption:hover {
+      opacity: 0.8;
     }
   </style>
 </head>
 <body>
 
-  <h2>Live Room Lighting – Realistic Overlay</h2>
-  <div class="controls">
-    <label>Select Light Color:</label>
-    <input type="color" id="lightColor" value="#ffe0b3">
+  <div id="lightColorPicker">
+    <div class="colorOption" style="background-color: #fcba03;" data-color="#fcba03"></div>
+    <div class="colorOption" style="background-color: #ffda73;" data-color="#ffda73"></div>
+    <div class="colorOption" style="background-color: #737eff;" data-color="#737eff"></div>
+    <div class="colorOption" style="background-color: #96ff73;" data-color="#96ff73"></div>
+    <div class="colorOption" style="background-color: #ffd4f0;" data-color="#ffd4f0"></div>
+    <div class="colorOption" style="background-color: #d4fff4;" data-color="#d4fff4"></div>
   </div>
 
   <video id="video" autoplay playsinline></video>
   <canvas id="canvas"></canvas>
 
+  <button id="startButton"></button>
+
   <script>
     const video = document.getElementById("video");
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
-    const lightPicker = document.getElementById("lightColor");
 
-    let lightColor = "#ffe0b3";
-    document.getElementById('Start').addEventListener('click', async () => {
-    lightPicker.addEventListener("input", () => {
-      lightColor = lightPicker.value;
+    let lightColor = "#fcba03"; // Default color
+
+    // Set up event listeners for color selection
+    const colorOptions = document.querySelectorAll(".colorOption");
+    colorOptions.forEach(option => {
+      option.addEventListener("click", (e) => {
+        lightColor = e.target.getAttribute("data-color");
+      });
     });
 
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        video.srcObject = stream;
-        video.onloadedmetadata = () => {
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-          requestAnimationFrame(renderLoop);
-        };
-      })
-      .catch(err => alert("Could not access camera: " + err));
-    
-    function renderLoop() {
-      // Draw video frame
-      ctx.globalCompositeOperation = "source-over";
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    document.getElementById('startButton').addEventListener('click', async () => {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          video.srcObject = stream;
+          video.onloadedmetadata = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            requestAnimationFrame(renderLoop);
+          };
+        })
+        .catch(err => alert("Could not access camera: " + err));
 
-      // Apply light tint using soft-light blend mode
-      ctx.globalCompositeOperation = "soft-light";
-      ctx.fillStyle = lightColor;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      function renderLoop() {
+        // Draw video frame
+        ctx.globalCompositeOperation = "source-over";
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      requestAnimationFrame(renderLoop);
-    }
-    })
+        // Apply light tint using soft-light blend mode
+        ctx.globalCompositeOperation = "soft-light";
+        ctx.fillStyle = lightColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        requestAnimationFrame(renderLoop);
+      }
+    });
   </script>
 
 </body>
