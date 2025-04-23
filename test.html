@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: sans-serif;
@@ -11,6 +11,7 @@
       overflow: hidden;
       background: black;
     }
+
     canvas, video {
       position: absolute;
       top: 0;
@@ -18,56 +19,64 @@
       width: 100vw;
       height: 100vh;
     }
-    /* Start button */
-    #startButton {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(255, 255, 255, 0.5);
-      border: none;
-      border-radius: 50%;
-      width: 70px;
-      height: 70px;
-      font-size: 30px;
-      color: white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
-      outline: none;
-    }
-    /* Select Color button */
-    #selectColorButton {
-      position: fixed;
-      bottom: 110px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 8px 16px;
-      background: rgba(255,255,255,0.5);
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-      outline: none;
-    }
-  #lightColorPicker {
+
+  #controls {
   position: fixed;
-  top: 20px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  display: none;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 12px 20px;
-  border-radius: 8px;
-  max-width: 100vw;
-  max-height: 50vh;
-  overflow-y: auto;
-  z-index: 10;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
 }
 
+#startButton {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  font-size: 30px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  outline: none;
+}
+
+#selectColorButton {
+  position: absolute;
+  left: calc(50% + 70px); /* StartButton center + its full width */
+  transform: translateX(10px); /* Add spacing between buttons */
+  padding: 15px 20px;
+  background: rgba(255,255,255,0.5);
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  display: none;
+}
+
+
+    #lightColorPicker {
+      position: fixed;
+      top: 20px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      display: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 12px 20px;
+      border-radius: 8px;
+      max-width: 100vw;
+      max-height: 50vh;
+      overflow-y: auto;
+      z-index: 10;
+    }
 
     .colorOptionContainer {
       display: flex;
@@ -75,96 +84,104 @@
       align-items: center;
       cursor: pointer;
     }
+
     .colorOption {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      position: relative;
     }
+
+    .noColor::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      background: red;
+      transform: rotate(45deg);
+      top: 50%;
+      left: 0;
+      transform-origin: center;
+    }
+
     .colorLabel {
       margin-top: 4px;
       font-size: 12px;
       color: #fff;
       text-shadow: 0 1px 2px rgba(0,0,0,0.8);
     }
+
     .colorOptionContainer:hover .colorOption {
       opacity: 0.8;
     }
-    .colorOptionContainer{
-         display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-    }
-    .noColor::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 3px;
-  background: red;
-  transform: rotate(45deg);
-  top: 50%;
-  left: 0;
-  transform-origin: center;
-}
-.colorOption {
-  position: relative; /* Required for the ::after positioning */
-}
 
+    #selectedColorLabel {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+      z-index: 5;
+    }
   </style>
 </head>
 <body>
-
   <video id="video" autoplay playsinline></video>
   <canvas id="canvas"></canvas>
 
-  <button id="startButton">▶</button>
-  <button id="selectColorButton">Select Color</button>
+  <div id="controls">
+    <button id="startButton">▶</button>
+    <button id="selectColorButton">Select Color</button>
+  </div>
+  <div id="selectedColorLabel">Selected: No Color</div>
 
-    <div id="lightColorPicker">
-<div class="colorOptionContainer" data-color="#ffffff">
-  <div class="colorOption noColor" style="background-color: #ffffff"></div>
-  <div class="colorLabel">No Color</div>
-</div>
-
-    <div class="colorOptionContainer" data-color="#fcba03">
+  <div id="lightColorPicker">
+    <div class="colorOptionContainer" data-color="#ffffff" data-name="No Color">
+      <div class="colorOption noColor" style="background-color: #ffffff"></div>
+      <div class="colorLabel">No Color</div>
+    </div>
+    <div class="colorOptionContainer" data-color="#fcba03" data-name="Yellow">
       <div class="colorOption" style="background-color: #fcba03;"></div>
       <div class="colorLabel">Yellow</div>
     </div>
-    <div class="colorOptionContainer" data-color="#3bf563">
+    <div class="colorOptionContainer" data-color="#3bf563" data-name="Green">
       <div class="colorOption" style="background-color: #3bf563;"></div>
       <div class="colorLabel">Green</div>
     </div>
-    <div class="colorOptionContainer" data-color="#737eff">
-      <div class="colorOption" style="background-color: #737eff;"></div>
+    <div class="colorOptionContainer" data-color="#73d0ff" data-name="Blue">
+      <div class="colorOption" style="background-color: #73d0ff;"></div>
       <div class="colorLabel">Blue</div>
     </div>
-    <div class="colorOptionContainer" data-color="#96ff73">
+    <div class="colorOptionContainer" data-color="#96ff73" data-name="Green">
       <div class="colorOption" style="background-color: #96ff73;"></div>
-      <div class="colorLabel">Green</div>
+      <div class="colorLabel">Moss</div>
     </div>
-    <div class="colorOptionContainer" data-color="#ffd4f0">
+    <div class="colorOptionContainer" data-color="#ffd4f0" data-name="Pink">
       <div class="colorOption" style="background-color: #ffd4f0;"></div>
       <div class="colorLabel">Pink</div>
     </div>
-    <div class="colorOptionContainer" data-color="#d4fff4">
+    <div class="colorOptionContainer" data-color="#d4fff4" data-name="Tale">
       <div class="colorOption" style="background-color: #d4fff4;"></div>
       <div class="colorLabel">Tale</div>
     </div>
-    <div class="colorOptionContainer" data-color="#f7525f">
+    <div class="colorOptionContainer" data-color="#f7525f" data-name="Red">
       <div class="colorOption" style="background-color: #f7525f;"></div>
       <div class="colorLabel">Red</div>
     </div>
-    <div class="colorOptionContainer" data-color="#5252f7">
+    <div class="colorOptionContainer" data-color="#5252f7" data-name="Purple">
       <div class="colorOption" style="background-color: #5252f7;"></div>
       <div class="colorLabel">Purple</div>
     </div>
-    <div class="colorOptionContainer" data-color="#f6ff7b">
+    <div class="colorOptionContainer" data-color="#f6ff7b" data-name="Lemon">
       <div class="colorOption" style="background-color: #f6ff7b;"></div>
-      <div class="colorLabel"> Lemon</div>
+      <div class="colorLabel">Lemon</div>
     </div>
   </div>
-
 
   <script>
     const video = document.getElementById("video");
@@ -173,25 +190,38 @@
     const picker = document.getElementById("lightColorPicker");
     const selectBtn = document.getElementById("selectColorButton");
     const startBtn = document.getElementById("startButton");
+    const selectedColorLabel = document.getElementById("selectedColorLabel");
 
-    let lightColor = "#fcba03"; // default
+    let lightColor = "#ffffff"; // default: No Color
+    let colorName = "No Color";
+    let hasStarted = false;
 
     // Toggle the color picker visibility
     selectBtn.addEventListener("click", () => {
       picker.style.display = picker.style.display === "flex" ? "none" : "flex";
+      selectedColorLabel.style.display = "none"; // Hide the selected color label when picker is open
     });
 
-    // When a color is chosen
+    // Handle color selection
     picker.querySelectorAll(".colorOptionContainer").forEach(container => {
       container.addEventListener("click", () => {
         lightColor = container.getAttribute("data-color");
+        colorName = container.getAttribute("data-name");
+        selectedColorLabel.textContent = "Selected: " + colorName;
         picker.style.display = "none";
+        
+        selectedColorLabel.style.display = "block"; // Hide the selected color label when picker is open
       });
     });
 
     // Start video + render loop
     startBtn.addEventListener("click", () => {
-      navigator.mediaDevices.getUserMedia({ video: true })
+      if (!hasStarted) {
+        hasStarted = true;
+        selectBtn.style.display = "inline-block"; // Show the Select Color button
+      }
+
+      navigator.mediaDevices.getUserMedia({  video: { facingMode: "user" } })
         .then(stream => {
           video.srcObject = stream;
           video.onloadedmetadata = () => {
@@ -207,13 +237,14 @@
       ctx.globalCompositeOperation = "source-over";
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      ctx.globalCompositeOperation = "soft-light";
-      ctx.fillStyle = lightColor;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      if (lightColor !== "#ffffff") {
+        ctx.globalCompositeOperation = "soft-light";
+        ctx.fillStyle = lightColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
 
       requestAnimationFrame(renderLoop);
     }
   </script>
-
 </body>
 </html>
