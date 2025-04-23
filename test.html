@@ -235,8 +235,14 @@ let tutorialStep = 0;
   }
       picker.style.display = picker.style.display === "flex" ? "none" : "flex";
       selectedColorLabel.style.display = "none"; // Hide the selected color label when picker is open
+    selectBtn.style.display = "none"; // Hide the Select Color button when picker is open and then no need for the button
     });
 
+    selectedColorLabel.addEventListener("click", () => {
+
+      picker.style.display = "flex"; // Show the color picker
+      selectedColorLabel.style.display = "none"; // Hide the selected color label when picker is open
+    });
     // Handle color selection
     picker.querySelectorAll(".colorOptionContainer").forEach(container => {
       container.addEventListener("click", () => {
