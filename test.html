@@ -135,7 +135,7 @@
   <canvas id="canvas"></canvas>
 
   <div id="controls">
-    <button id="startButton">▶</button>
+    <button id="startButton"></button>
     <button id="selectColorButton">Select Color</button>
   </div>
   <div id="selectedColorLabel">Selected: No Color</div>
@@ -221,7 +221,7 @@
         selectBtn.style.display = "inline-block"; // Show the Select Color button
       }
 
-      navigator.mediaDevices.getUserMedia({  video: { facingMode: "user" } })
+      navigator.mediaDevices.getUserMedia({  video: { facingMode: "environment" } })
         .then(stream => {
           video.srcObject = stream;
           video.onloadedmetadata = () => {
