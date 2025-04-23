@@ -18,12 +18,13 @@
       width: 100vw;
       height: 100vh;
     }
+    /* Start button */
     #startButton {
       position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+      background-color: rgba(255, 255, 255, 0.5);
       border: none;
       border-radius: 50%;
       width: 70px;
@@ -34,60 +35,162 @@
       cursor: pointer;
       outline: none;
     }
-    #lightColorPicker {
+    /* Select Color button */
+    #selectColorButton {
       position: fixed;
-      top: 20px;
+      bottom: 110px;
       left: 50%;
       transform: translateX(-50%);
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.5);
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      outline: none;
+    }
+  #lightColorPicker {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 12px 20px;
+  border-radius: 8px;
+  max-width: 100vw;
+  max-height: 50vh;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+
+    .colorOptionContainer {
       display: flex;
-      justify-content: center;
-      gap: 10px;
-      z-index: 10;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
     }
     .colorOption {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      cursor: pointer;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     }
-    .colorOption:hover {
+    .colorLabel {
+      margin-top: 4px;
+      font-size: 12px;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    }
+    .colorOptionContainer:hover .colorOption {
       opacity: 0.8;
     }
+    .colorOptionContainer{
+         display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+    .noColor::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: red;
+  transform: rotate(45deg);
+  top: 50%;
+  left: 0;
+  transform-origin: center;
+}
+.colorOption {
+  position: relative; /* Required for the ::after positioning */
+}
+
   </style>
 </head>
 <body>
 
-  <div id="lightColorPicker">
-    <div class="colorOption" style="background-color: #fcba03;" data-color="#fcba03"></div>
-    <div class="colorOption" style="background-color: #ffda73;" data-color="#ffda73"></div>
-    <div class="colorOption" style="background-color: #737eff;" data-color="#737eff"></div>
-    <div class="colorOption" style="background-color: #96ff73;" data-color="#96ff73"></div>
-    <div class="colorOption" style="background-color: #ffd4f0;" data-color="#ffd4f0"></div>
-    <div class="colorOption" style="background-color: #d4fff4;" data-color="#d4fff4"></div>
-  </div>
-
   <video id="video" autoplay playsinline></video>
   <canvas id="canvas"></canvas>
 
-  <button id="startButton"></button>
+  <button id="startButton">▶</button>
+  <button id="selectColorButton">Select Color</button>
+
+    <div id="lightColorPicker">
+<div class="colorOptionContainer" data-color="#ffffff">
+  <div class="colorOption noColor" style="background-color: #ffffff"></div>
+  <div class="colorLabel">No Color</div>
+</div>
+
+    <div class="colorOptionContainer" data-color="#fcba03">
+      <div class="colorOption" style="background-color: #fcba03;"></div>
+      <div class="colorLabel">Yellow</div>
+    </div>
+    <div class="colorOptionContainer" data-color="#3bf563">
+      <div class="colorOption" style="background-color: #3bf563;"></div>
+      <div class="colorLabel">Green</div>
+    </div>
+    <div class="colorOptionContainer" data-color="#737eff">
+      <div class="colorOption" style="background-color: #737eff;"></div>
+      <div class="colorLabel">Blue</div>
+    </div>
+    <div class="colorOptionContainer" data-color="#96ff73">
+      <div class="colorOption" style="background-color: #96ff73;"></div>
+      <div class="colorLabel">Green</div>
+    </div>
+    <div class="colorOptionContainer" data-color="#ffd4f0">
+      <div class="colorOption" style="background-color: #ffd4f0;"></div>
+      <div class="colorLabel">Pink</div>
+    </div>
+    <div class="colorOptionContainer" data-color="#d4fff4">
+      <div class="colorOption" style="background-color: #d4fff4;"></div>
+      <div class="colorLabel">Tale</div>
+    </div>
+    <div class="colorOptionContainer" data-color="#f7525f">
+      <div class="colorOption" style="background-color: #f7525f;"></div>
+      <div class="colorLabel">Red</div>
+    </div>
+    <div class="colorOptionContainer" data-color="#5252f7">
+      <div class="colorOption" style="background-color: #5252f7;"></div>
+      <div class="colorLabel">Purple</div>
+    </div>
+    <div class="colorOptionContainer" data-color="#f6ff7b">
+      <div class="colorOption" style="background-color: #f6ff7b;"></div>
+      <div class="colorLabel"> Lemon</div>
+    </div>
+  </div>
+
 
   <script>
     const video = document.getElementById("video");
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
+    const picker = document.getElementById("lightColorPicker");
+    const selectBtn = document.getElementById("selectColorButton");
+    const startBtn = document.getElementById("startButton");
 
-    let lightColor = "#fcba03"; // Default color
+    let lightColor = "#fcba03"; // default
 
-    // Set up event listeners for color selection
-    const colorOptions = document.querySelectorAll(".colorOption");
-    colorOptions.forEach(option => {
-      option.addEventListener("click", (e) => {
-        lightColor = e.target.getAttribute("data-color");
+    // Toggle the color picker visibility
+    selectBtn.addEventListener("click", () => {
+      picker.style.display = picker.style.display === "flex" ? "none" : "flex";
+    });
+
+    // When a color is chosen
+    picker.querySelectorAll(".colorOptionContainer").forEach(container => {
+      container.addEventListener("click", () => {
+        lightColor = container.getAttribute("data-color");
+        picker.style.display = "none";
       });
     });
 
-    document.getElementById('startButton').addEventListener('click', async () => {
+    // Start video + render loop
+    startBtn.addEventListener("click", () => {
       navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
           video.srcObject = stream;
@@ -98,20 +201,18 @@
           };
         })
         .catch(err => alert("Could not access camera: " + err));
-
-      function renderLoop() {
-        // Draw video frame
-        ctx.globalCompositeOperation = "source-over";
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        // Apply light tint using soft-light blend mode
-        ctx.globalCompositeOperation = "soft-light";
-        ctx.fillStyle = lightColor;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        requestAnimationFrame(renderLoop);
-      }
     });
+
+    function renderLoop() {
+      ctx.globalCompositeOperation = "source-over";
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      ctx.globalCompositeOperation = "soft-light";
+      ctx.fillStyle = lightColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      requestAnimationFrame(renderLoop);
+    }
   </script>
 
 </body>
