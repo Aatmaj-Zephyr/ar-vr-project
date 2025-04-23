@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Realistic Room Light Tint</title>
+  <button id = "Start">Start</button>
   <style>
     body {
       font-family: sans-serif;
@@ -41,7 +42,7 @@
     const lightPicker = document.getElementById("lightColor");
 
     let lightColor = "#ffe0b3";
-
+    document.getElementById('Start').addEventListener('click', async () => {
     lightPicker.addEventListener("input", () => {
       lightColor = lightPicker.value;
     });
@@ -56,7 +57,7 @@
         };
       })
       .catch(err => alert("Could not access camera: " + err));
-
+    
     function renderLoop() {
       // Draw video frame
       ctx.globalCompositeOperation = "source-over";
@@ -69,6 +70,7 @@
 
       requestAnimationFrame(renderLoop);
     }
+    })
   </script>
 
 </body>
