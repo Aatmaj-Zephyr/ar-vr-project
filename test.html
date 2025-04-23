@@ -2,24 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Live Room Lighting Preview</title>
+  <title>Realistic Room Light Tint</title>
   <style>
     body {
       font-family: sans-serif;
       text-align: center;
-      padding: 20px;
-      background-color: #f0f0f0;
+      background: #111;
+      color: white;
     }
-    #canvas {
+    canvas {
+      border-radius: 10px;
       margin-top: 10px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      max-width: 100%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     .controls {
-      margin: 15px;
+      margin-top: 15px;
     }
-    /* hide the raw video element */
     #video {
       display: none;
     }
@@ -27,63 +25,49 @@
 </head>
 <body>
 
-  <h2>Live Room Lighting Preview</h2>
+  <h2>Live Room Lighting – Realistic Overlay</h2>
   <div class="controls">
-    <label for="lightColor">Select Light Color: </label>
-    <input type="color" id="lightColor" value="#ffffff">
+    <label>Select Light Color:</label>
+    <input type="color" id="lightColor" value="#ffe0b3">
   </div>
+
   <video id="video" autoplay playsinline></video>
   <canvas id="canvas"></canvas>
 
   <script>
-    const video    = document.getElementById('video');
-    const canvas   = document.getElementById('canvas');
-    const ctx      = canvas.getContext('2d');
-    const picker   = document.getElementById('lightColor');
-    let rLight = 255, gLight = 255, bLight = 255;
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const lightPicker = document.getElementById("lightColor");
 
-    // When user picks a new color, update the RGB multipliers
-    picker.addEventListener('input', e => {
-      const hex = e.target.value;
-      rLight = parseInt(hex.substr(1,2), 16);
-      gLight = parseInt(hex.substr(3,2), 16);
-      bLight = parseInt(hex.substr(5,2), 16);
+    let lightColor = "#ffe0b3";
+
+    lightPicker.addEventListener("input", () => {
+      lightColor = lightPicker.value;
     });
 
-    // Get webcam feed
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(stream => {
         video.srcObject = stream;
-        video.addEventListener('loadedmetadata', () => {
-          // match canvas to video dimensions
-          canvas.width  = video.videoWidth;
+        video.onloadedmetadata = () => {
+          canvas.width = video.videoWidth;
           canvas.height = video.videoHeight;
-          requestAnimationFrame(processFrame);
-        });
+          requestAnimationFrame(renderLoop);
+        };
       })
-      .catch(err => {
-        console.error('⚠️ Unable to access camera:', err);
-        alert('Could not access camera. Make sure you allowed permission.');
-      });
+      .catch(err => alert("Could not access camera: " + err));
 
-    function processFrame() {
-      // draw current video frame
+    function renderLoop() {
+      // Draw video frame
+      ctx.globalCompositeOperation = "source-over";
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      // grab pixel data
-      const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data  = frame.data;
 
-      // apply per-pixel multiply blend with light color
-      for (let i = 0; i < data.length; i += 4) {
-        data[i]     = data[i]     * rLight / 255; // R
-        data[i + 1] = data[i + 1] * gLight / 255; // G
-        data[i + 2] = data[i + 2] * bLight / 255; // B
-        // alpha (i+3) stays the same
-      }
+      // Apply light tint using soft-light blend mode
+      ctx.globalCompositeOperation = "soft-light";
+      ctx.fillStyle = lightColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // paint back to canvas
-      ctx.putImageData(frame, 0, 0);
-      requestAnimationFrame(processFrame);
+      requestAnimationFrame(renderLoop);
     }
   </script>
 
