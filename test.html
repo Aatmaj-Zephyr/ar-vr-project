@@ -128,6 +128,30 @@
       text-shadow: 0 1px 2px rgba(0,0,0,0.8);
       z-index: 5;
     }
+
+    #tutorialOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  display: none; /* Hidden by default */
+}
+
+#tutorialText {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
   </style>
 </head>
 <body>
@@ -182,6 +206,9 @@
       <div class="colorLabel">Lemon</div>
     </div>
   </div>
+<div id="tutorialOverlay">
+  <div id="tutorialText">Step 1: Press the "Start" button to activate the camera.</div>
+</div>
 
   <script>
     const video = document.getElementById("video");
@@ -195,9 +222,17 @@
     let lightColor = "#ffffff"; // default: No Color
     let colorName = "No Color";
     let hasStarted = false;
+    const tutorialOverlay = document.getElementById("tutorialOverlay");
+const tutorialText = document.getElementById("tutorialText");
+
+let tutorialStep = 0;
 
     // Toggle the color picker visibility
     selectBtn.addEventListener("click", () => {
+          if (tutorialStep === 1) {
+    advanceTutorial(); // Move to Step 2
+    startBtn.style.display = "none"; // Hide the Start button Once its use is over
+  }
       picker.style.display = picker.style.display === "flex" ? "none" : "flex";
       selectedColorLabel.style.display = "none"; // Hide the selected color label when picker is open
     });
@@ -205,6 +240,9 @@
     // Handle color selection
     picker.querySelectorAll(".colorOptionContainer").forEach(container => {
       container.addEventListener("click", () => {
+                  if (tutorialStep === 2) {
+            advanceTutorial(); // Move to Step 2
+        }
         lightColor = container.getAttribute("data-color");
         colorName = container.getAttribute("data-name");
         selectedColorLabel.textContent = "Selected: " + colorName;
@@ -216,6 +254,11 @@
 
     // Start video + render loop
     startBtn.addEventListener("click", () => {
+          if (tutorialStep === 0) {
+    advanceTutorial(); // Move to Step 1
+          
+console.log("Advancing Tutorial");
+}
       if (!hasStarted) {
         hasStarted = true;
         selectBtn.style.display = "inline-block"; // Show the Select Color button
@@ -245,6 +288,43 @@
 
       requestAnimationFrame(renderLoop);
     }
+
+
+function showTutorial(step) {
+  // Display the tutorial overlay
+  tutorialOverlay.style.display = "flex";
+
+  // Change tutorial text based on the step
+  if (step === 0) {
+    tutorialText.innerHTML = "Step 1: Press the 'Camera' button to activate the camera.";
+  } else if (step === 1) {
+    tutorialText.innerHTML = "Step 2: Select a color by clicking the 'Select Color' button.";
+  } else if (step === 2) {
+    tutorialText.innerHTML = "Step 3: Select a Light color Of your choice";
+  }
+}
+
+function advanceTutorial() {
+  tutorialStep++;
+
+  // Handle the steps
+  if (tutorialStep === 1) {
+    showTutorial(1);
+  } else if (tutorialStep === 2) {
+    showTutorial(2);
+   
+  }
+ 
+    else {
+        tutorialOverlay.style.display = "none"; // Hide the overlay when tutorial is complete
+    }
+   }
+
+// Step 1: Show tutorial initially
+showTutorial(0);
+
+
+
   </script>
 </body>
 </html>
